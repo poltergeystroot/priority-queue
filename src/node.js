@@ -1,22 +1,25 @@
 class Node {
 	constructor(data, priority) {
-		this.data = 42;
-		this.priority = 15;
+		this.data = data;
+		this.priority = priority;
 		this.parent = null;
 		this.left = null;
 		this.right = null;
 	}
 
 	appendChild(node) {
-			if (this.left == null || this.right == null) {
-				if (this.left == null) {this.left = node;}
-				else {this.right = node;}
-			}
-			node.parent=node;
+		if (!node) return;
+		if (!this.left) {
+			this.left = node;
+			this.left.parent = this;
+		}
+		else if (!this.right) {
+			this.right = node;
+			this.right.parent = this;
+		}
 	}
 
 	removeChild(node) {
-		
         if (this.left == node) {
             this.left = null;
             node.parent = null;
@@ -27,22 +30,40 @@ class Node {
             node.parent = null;
             return;
         }
-        throw Error;
+		throw new Error('Object does not exist')
     }
 
 	remove() {
-		if (this.parent != null)
-		this.parent.removeChild(this);
+		if (this.parent) 
+			this.parent.removeChild(this)
 	}
 
 	swapWithParent() {
-		//this.data = 15;
-		//this.priority = 42;
-		//throw Error;
-		this.parent=Node;
-		this.child=Node;
-		//this.child=node;
-		//this.grandson=node;
+		if (!this.parent) return;
+		let thisChildOfLeft = this.left;
+		let thisChildOfRight = this.right;
+		let parent = this.parent;
+		let parentChildOfLeft = parent.left;
+		let parentChildOfRight = parent.right;
+		let grandparent = parent.parent;
+		if (thisChildOfLeft) thisChildOfLeft.remove();
+		if (thisChildOfRight) thisChildOfRight.remove();
+		if (parentChildOfLeft) parentChildOfLeft.remove();
+		if (parentChildOfRight) parentChildOfRight.remove();
+		if (grandparent) {
+			parent.remove();
+			grandparent.appendChild(this);
+		}
+		if (this == parentChildOfLeft) {
+			this.appendChild(parent);
+			this.appendChild(parentChildOfRight);
+		}
+		else {
+			this.appendChild(parentChildOfLeft);
+			this.appendChild(parent);
+		}
+		parent.appendChild(thisChildOfLeft);
+		parent.appendChild(thisChildOfRight);
 	}
 }
 
