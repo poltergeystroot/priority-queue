@@ -24,10 +24,10 @@ describe('Node', () => {
 			leftChild = new Node(13, 20);
 			rightChild = new Node(98, 69);
 		});
-
+		
 		it('assigns passed child to this.left', () => {
 			parent.appendChild(leftChild);
-
+		
 			expect(parent.left).to.equal(leftChild);
 			expect(parent.right).to.equal(null);
 		});
@@ -91,7 +91,7 @@ describe('Node', () => {
 	describe('#remove', () => {
 		it('does nothing if node does not have parent', () => {
 			const node = new Node(42, 15);
-
+			
 			expect(() => {
 				node.remove();
 			}).not.to.throw();
@@ -100,7 +100,7 @@ describe('Node', () => {
 		it('calls child.parent.removeChild with child as arg', () => {
 			const parent = new Node(42, 15);
 			const child = new Node(15, 42);
-
+			console.log(node);
 			parent.appendChild(child);
 
 			sinon.spy(parent, 'removeChild');
@@ -115,7 +115,6 @@ describe('Node', () => {
 	describe('#swapWithParent', () => {
 		it('does nothing if node does not have parent', () => {
 			const node = new Node(15, 42);
-
 			expect(() => {
 				node.swapWithParent();
 			}).not.to.throw();

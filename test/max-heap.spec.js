@@ -16,16 +16,15 @@ describe('MaxHeap', () => {
 
 	describe('#push', () => {
 		let h;
-
+		
 		beforeEach(() => {
 			h = new MaxHeap();
+			
 		});
 
 		it('calls insertNode with new node having passed data and priority', () => {
 			sinon.spy(h, 'insertNode');
-
 			h.push(42, 15);
-
 			expect(h.insertNode).to.have.been.calledOnce;
 			expect(h.insertNode.firstCall.args[0]).to.be.an.instanceof(Node);
 			expect(h.insertNode.firstCall.args[0].data).to.equal(42);
